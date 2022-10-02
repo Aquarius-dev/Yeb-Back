@@ -1,0 +1,61 @@
+
+plugins {
+	id 'org.springframework.boot' version '2.7.4'
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'java'
+}
+
+subprojects{
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	repositories {
+        mavenCentral()
+    }
+
+	ext{
+		mybatisVersion = "3.5.2"
+		swaggerVersion = "3.0.0"
+		mysqlconnectorVersion = "8.0.30"
+		lombokVersion = "1.18.24"
+	}
+
+	dependencies{
+		implementation "org.springframework.boot:spring-boot-starter-web"
+		developmentOnly "org.springframework.boot:spring-boot-devtools"
+		implementation "com.baomidou:mybatis-plus:$mybatisVersion"
+		implementation "io.springfox:springfox-swagger-ui:$swaggerVersion"
+		implementation "io.springfox:springfox-swagger2:$swaggerVersion"
+		runtimeOnly "mysql:mysql-connector-java:$mysqlconnectorVersion"
+		compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
+	tasks.named('test') {
+		useJUnitPlatform()
+	}	
+}
+
+group = 'com.xxxx'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+project(":yeb-server"){
+	ext {
+		jjwtVersion = '0.11.5'
+	}
+	dependencies {
+		implementation "org.springframework.boot:spring-boot-starter-security"
+		implementation "io.jsonwebtoken:jjwt-api:$jjwtVersion"
+		implementation "io.jsonwebtoken:jjwt-gson:$jjwtVersion"
+		runtimeOnly "io.jsonwebtoken:jjwt-impl:$jjwtVersion"
+	}
+}

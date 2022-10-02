@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    password: zhong
+    username: qwert1234
+    url: jdbc:mysql://192.168.1.233:33306/yeb?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.xxxx.yebserver.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.xxxx.yebserver.mapper: debug
+
+jwt:
+  tokenHeader: Anthorization
+  secret: UveTNxMFoy2dyqNwqDDRunv4832kQ4yFdGWtQNt+hhk=
+  expiration: 604800
+  tokenHead: power
