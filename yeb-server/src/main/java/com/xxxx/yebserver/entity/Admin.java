@@ -1,9 +1,21 @@
+/*
+ * @Author: Aquarius
+ * @Date: 2022-10-02 16:24:49
+ * @LastEditors: Aquraius
+ * @LastEditTime: 2022-10-03 08:45:21
+ * @Description: comment
+ */
 package com.xxxx.yebserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -23,7 +35,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("t_admin")
 @ApiModel(value = "Admin对象", description = "管理员表")
-public class Admin implements Serializable {
+public class Admin implements Serializable,UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,4 +69,29 @@ public class Admin implements Serializable {
 
     @ApiModelProperty("是否启用1 0")
     private Byte enabled;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
