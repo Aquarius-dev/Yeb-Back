@@ -5,8 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -23,96 +24,96 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("t_employee")
-@ApiModel(value = "Employee对象", description = "员工表")
+@Tag(name = "Employee对象", description = "员工表")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("员工编号")
+    @Schema(description="员工编号")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("员工姓名")
+    @Schema(description="员工姓名")
     private String name;
 
-    @ApiModelProperty("性别")
+    @Schema(description="性别")
     private String gender;
 
-    @ApiModelProperty("出生日期")
+    @Schema(description="出生日期")
     private LocalDateTime birthday;
 
-    @ApiModelProperty("身份证号")
+    @Schema(description="身份证号")
     private String idCard;
 
-    @ApiModelProperty("婚姻状况")
+    @Schema(description="婚姻状况")
     private String wedlock;
 
-    @ApiModelProperty("民族")
+    @Schema(description="民族")
     private Integer nationId;
 
-    @ApiModelProperty("籍贯")
+    @Schema(description="籍贯")
     private String nativePlace;
 
-    @ApiModelProperty("政治面貌")
+    @Schema(description="政治面貌")
     private Integer politicId;
 
-    @ApiModelProperty("邮箱")
+    @Schema(description="邮箱")
     private String email;
 
-    @ApiModelProperty("电话号码")
+    @Schema(description="电话号码")
     private String phone;
 
-    @ApiModelProperty("联系地址")
+    @Schema(description="联系地址")
     private String address;
 
-    @ApiModelProperty("所属部门")
+    @Schema(description="所属部门")
     private Integer departmentId;
 
-    @ApiModelProperty("职称ID")
+    @Schema(description="职称ID")
     private Integer jobLevelId;
 
-    @ApiModelProperty("职位ID")
+    @Schema(description="职位ID")
     private Integer posId;
 
-    @ApiModelProperty("聘用形式：劳动合同，劳务合同")
+    @Schema(description="聘用形式：劳动合同，劳务合同")
     private String engageForm;
 
-    @ApiModelProperty("最高学历")
+    @Schema(description="最高学历")
     private String tiptopDegree;
 
-    @ApiModelProperty("所属专业")
+    @Schema(description="所属专业")
     private String specialty;
 
-    @ApiModelProperty("毕业院校")
+    @Schema(description="毕业院校")
     private String school;
 
-    @ApiModelProperty("入职日期")
+    @Schema(description="入职日期")
     private LocalDateTime beginDate;
 
-    @ApiModelProperty("在职状态")
+    @Schema(description="在职状态")
     private String workState;
 
-    @ApiModelProperty("工号")
+    @Schema(description="工号")
     private String workId;
 
-    @ApiModelProperty("合同期限")
+    @Schema(description="合同期限")
     private Object contractTerm;
 
-    @ApiModelProperty("转正日期")
+    @Schema(description="转正日期")
     private LocalDateTime conversionTime;
 
-    @ApiModelProperty("离职日期")
+    @Schema(description="离职日期")
     private LocalDateTime notworkDate;
 
-    @ApiModelProperty("合同起始日期")
+    @Schema(description="合同起始日期")
     private LocalDateTime beginContract;
 
-    @ApiModelProperty("合同终止日期")
+    @Schema(description="合同终止日期")
     private LocalDateTime endContract;
 
-    @ApiModelProperty("工龄")
+    @Schema(description="工龄")
     private Integer workAge;
 
-    @ApiModelProperty("工资账套ID")
+    @Schema(description="工资账套ID")
     private Integer salaryId;
 }

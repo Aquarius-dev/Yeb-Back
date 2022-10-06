@@ -1,9 +1,16 @@
 spring:
+  main:
+    allow-circular-references: true
   datasource:
     password: zhong
     username: qwert1234
-    url: jdbc:mysql://192.168.1.233:33306/yeb?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://192.168.1.152:33306/yeb?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    pathmatch:
+        matching-strategy: ANT_PATH_MATCHER
+  profiles:
+    active: 
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*Mapper.xml
@@ -19,4 +26,24 @@ jwt:
   tokenHeader: Anthorization
   secret: UveTNxMFoy2dyqNwqDDRunv4832kQ4yFdGWtQNt+hhk=
   expiration: 604800
-  tokenHead: power
+  tokenHead: Bearer
+
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui/**
+      - /swagger-resources/**
+      - /v3/api-docs/**
+      - /**/*.html
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.map
+      - /favicon.ico
+      - /druid/**
+      - /actuator/**
+      - /sso/**
+      - /home/**
+      - /product/**
+      - /brand/**

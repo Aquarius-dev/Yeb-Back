@@ -1,11 +1,23 @@
+/*
+ * @Author: Aquarius
+ * @Date: 2022-10-02 16:24:49
+ * @LastEditors: Aquraius
+ * @LastEditTime: 2022-10-03 08:45:21
+ * @Description: comment
+ */
 package com.xxxx.yebserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import java.util.Collection;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -22,39 +34,64 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("t_admin")
-@ApiModel(value = "Admin对象", description = "管理员表")
-public class Admin implements Serializable {
+@Tag(name = "Admin对象", description = "管理员表")
+public class Admin implements Serializable,UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("id")
+    @Schema(description="id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("姓名")
+    @Schema(description="姓名")
     private String name;
 
-    @ApiModelProperty("手机号码")
+    @Schema(description="手机号码")
     private String phone;
 
-    @ApiModelProperty("住宅电话")
+    @Schema(description="住宅电话")
     private String telephone;
 
-    @ApiModelProperty("联系地址")
+    @Schema(description="联系地址")
     private String address;
 
-    @ApiModelProperty("用户名")
+    @Schema(description="用户名")
     private String username;
 
-    @ApiModelProperty("密码")
+    @Schema(description="密码")
     private String password;
 
-    @ApiModelProperty("用户头像")
+    @Schema(description="用户头像")
     private String userFace;
 
-    @ApiModelProperty("备注")
+    @Schema(description="备注")
     private String remark;
 
-    @ApiModelProperty("是否启用1 0")
+    @Schema(description="是否启用1 0")
     private Byte enabled;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

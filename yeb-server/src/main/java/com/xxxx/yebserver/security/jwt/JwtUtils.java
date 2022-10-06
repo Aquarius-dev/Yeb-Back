@@ -1,10 +1,3 @@
-/*
- * @Author: Aquarius
- * @Date: 2022-10-02 17:10:42
- * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-02 23:41:33
- * @Description: comment
- */
 package com.xxxx.yebserver.security.jwt;
 
 import java.security.Key;
@@ -19,6 +12,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+/*
+ * @Author: Aquarius
+ * @Date: 2022-10-02 17:10:42
+ * @LastEditors: Aquraius
+ * @LastEditTime: 2022-10-02 23:41:33
+ * @Description: Jwt工具类
+ */
 @Component
 public class JwtUtils {
     @Value("${jwt.secret}")
