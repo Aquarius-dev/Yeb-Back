@@ -1,10 +1,4 @@
-/*
- * @Author: Aquarius
- * @Date: 2022-10-02 16:24:49
- * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-03 09:42:48
- * @Description: comment
- */
+
 package com.xxxx.yebserver.service.impl;
 
 import com.xxxx.yebserver.entity.Admin;
@@ -29,13 +23,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-/**
- * <p>
- * 管理员表 服务实现类
- * </p>
- *
- * @author Aquarius
- * @since 2022-10-02
+/*
+ * @Author: Aquarius
+ * @Date: 2022-10-02 16:24:49
+ * @LastEditors: Aquraius
+ * @LastEditTime: 2022-10-06 20:36:53
+ * @Description: 管理员服务类
  */
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
@@ -78,7 +71,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         String token = jwtUtils.generateToken(userDetails);
-        Map<String,String> tokenMap = new HashMap<>();
+        Map<String,String> tokenMap = new HashMap<>(6);
         tokenMap.put("token",token);
         tokenMap.put("tokenHead", tokenHead);
         return RespBean.success("登陆成功",tokenMap);
@@ -93,7 +86,5 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public Admin getAdminByUserName(String username) {
         return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", username).eq("enabled", true));
     }
-
-
 
 }

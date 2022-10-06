@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -23,51 +23,51 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("t_salary")
-@ApiModel(value = "Salary对象", description = "工资表")
+@Tag(name = "Salary对象", description = "工资表")
 public class Salary implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("id")
+    @Schema(description="id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("基本工资")
+    @Schema(description="基本工资")
     private Integer basicSalary;
 
-    @ApiModelProperty("奖金")
+    @Schema(description="奖金")
     private Integer bonus;
 
-    @ApiModelProperty("午餐补助")
+    @Schema(description="午餐补助")
     private Integer lunchSalary;
 
-    @ApiModelProperty("交通补助")
+    @Schema(description="交通补助")
     private Integer trafficSalary;
 
-    @ApiModelProperty("应发工资")
+    @Schema(description="应发工资")
     private Integer allSalary;
 
-    @ApiModelProperty("养老金基数")
+    @Schema(description="养老金基数")
     private Integer pensionBase;
 
-    @ApiModelProperty("养老金比率")
+    @Schema(description="养老金比率")
     private Double pensionPer;
 
-    @ApiModelProperty("启用时间")
+    @Schema(description="启用时间")
     private LocalDateTime createDate;
 
-    @ApiModelProperty("医疗基数")
+    @Schema(description="医疗基数")
     private Integer medicalBase;
 
-    @ApiModelProperty("医疗保险比率")
+    @Schema(description="医疗保险比率")
     private Double medicalPer;
 
-    @ApiModelProperty("公积金基数")
+    @Schema(description="公积金基数")
     private Integer accumulationFundBase;
 
-    @ApiModelProperty("公积金比率")
+    @Schema(description="公积金比率")
     private Double accumulationFundPer;
 
-    @ApiModelProperty("名称")
+    @Schema(description="名称")
     private String name;
 }

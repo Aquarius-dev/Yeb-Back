@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -22,24 +22,24 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("t_sys_msg")
-@ApiModel(value = "SysMsg对象", description = "系统消息")
+@Tag(name = "SysMsg对象", description = "系统消息")
 public class SysMsg implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("id")
+    @Schema(description="id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("消息id")
+    @Schema(description="消息id")
     private Integer mid;
 
-    @ApiModelProperty("0表示群发消息")
+    @Schema(description="0表示群发消息")
     private Integer type;
 
-    @ApiModelProperty("这条消息是给谁的")
+    @Schema(description="这条消息是给谁的")
     private Integer adminid;
 
-    @ApiModelProperty("0 未读 1 已读")
+    @Schema(description="0 未读 1 已读")
     private Integer state;
 }

@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -22,27 +22,27 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("t_department")
-@ApiModel(value = "Department对象", description = "部门表")
+@Tag(name = "Department对象", description = "部门表")
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("id")
+    @Schema(description="id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("部门名称")
+    @Schema(description="部门名称")
     private String name;
 
-    @ApiModelProperty("父id")
+    @Schema(description="父id")
     private Integer parentId;
 
-    @ApiModelProperty("路径")
+    @Schema(description="路径")
     private String depPath;
 
-    @ApiModelProperty("是否启用")
+    @Schema(description="是否启用")
     private Boolean enabled;
 
-    @ApiModelProperty("是否上级")
+    @Schema(description="是否上级")
     private Boolean isParent;
 }

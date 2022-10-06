@@ -1,14 +1,14 @@
-/*
- * @Author: Aquarius
- * @Date: 2022-10-03 08:35:17
- * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-03 08:39:58
- * @Description: comment
- */
 package com.xxxx.yebserver.entity;
 
 import lombok.*;
 
+/*
+ * @Author: Aquarius
+ * @Date: 2022-10-03 08:35:17
+ * @LastEditors: Aquraius
+ * @LastEditTime: 2022-10-06 20:35:44
+ * @Description: 统一返回结果
+ */
 @Data
 public class RespBean{
     private long code;
