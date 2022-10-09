@@ -13,12 +13,12 @@ import lombok.*;
 public class RespBean{
     private long code;
     private String message;
-    private Object object;
+    private Object obj;
 
-    public RespBean(long code, String message, Object object) {
+    public RespBean(long code, String message, Object obj) {
         this.code = code;
         this.message = message;
-        this.object = object;
+        this.obj = obj;
     }
 
     /**

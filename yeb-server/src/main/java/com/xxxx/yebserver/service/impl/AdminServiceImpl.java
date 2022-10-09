@@ -1,7 +1,16 @@
+/*
+ * @Author: Aquarius
+ * @Date: 2022-10-06 20:40:07
+ * @LastEditors: Aquraius
+ * @LastEditTime: 2022-10-07 09:44:14
+ * @Description: comment
+ */
 
 package com.xxxx.yebserver.service.impl;
 
+import com.wf.captcha.utils.CaptchaUtil;
 import com.xxxx.yebserver.entity.Admin;
+import com.xxxx.yebserver.entity.AdminLoginParam;
 import com.xxxx.yebserver.entity.RespBean;
 import com.xxxx.yebserver.mapper.AdminMapper;
 import com.xxxx.yebserver.security.jwt.JwtUtils;
@@ -50,20 +59,24 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 登陆之后返回Token
-     * @param username
-     * @param password
+     * @param adminLoginParam
      * @param request
      * @return
      */
     @Override
-    public RespBean login(String username, String password, HttpServletRequest request) {
-        UserDetails userDetails =  userDetailsService.loadUserByUsername(username);
+    public RespBean login(AdminLoginParam adminLoginParam, HttpServletRequest request) {
+        if (!CaptchaUtil.ver(adminLoginParam.getCode(), request)) {
+            // 清除ession中的验证码
+            CaptchaUtil.clear(request);
+            return RespBean.error("验证码不正确");
+        }
+        UserDetails userDetails =  userDetailsService.loadUserByUsername(adminLoginParam.getUsername());
 
-        if(null != userDetails || !passwordEncoder.matches(password, userDetails.getPassword())){
+        if(null == userDetails || !passwordEncoder.matches(adminLoginParam.getPassword(), userDetails.getPassword())){
             return RespBean.error("用户名密码不正确");
         }
         
-        if(userDetails.isEnabled()){
+        if(!userDetails.isEnabled()){
             return RespBean.error("账号被禁用，请联系管理员");
         }
 

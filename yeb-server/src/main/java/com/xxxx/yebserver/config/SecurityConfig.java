@@ -73,7 +73,7 @@ public class SecurityConfig {
     http.csrf().disable()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests().antMatchers("/login","/logout")
+        .authorizeRequests().antMatchers(ignoreUrlsConfig.getUrls().toArray(String[]::new))
         .permitAll()
         .anyRequest().authenticated();
 

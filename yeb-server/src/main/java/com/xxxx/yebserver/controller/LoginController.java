@@ -1,7 +1,18 @@
+/*
+ * @Author: Aquarius
+ * @Date: 2022-10-06 20:40:07
+ * @LastEditors: Aquraius
+ * @LastEditTime: 2022-10-07 10:27:37
+ * @Description: comment
+ */
 package com.xxxx.yebserver.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xxxx.yebserver.entity.Admin;
@@ -22,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @LastEditTime: 2022-10-06 11:05:19
  * @Description: 登陆处理类
  */
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "LoginController")
 @RestController
@@ -32,12 +44,12 @@ public class LoginController {
 
     @Operation(summary = "登陆",description = "登陆之后返回Token")
     @PostMapping("/login")
-    public RespBean login(AdminLoginParam adminLoginParam,HttpServletRequest request) {
-        return adminService.login(adminLoginParam.getUsername(),adminLoginParam.getPassword(),request); 
+    public RespBean login(@RequestBody AdminLoginParam adminLoginParam,HttpServletRequest request) {
+        return adminService.login(adminLoginParam,request);
     }
 
-    @Operation(summary = "当前用户信息",description = "获取当前用户信息")
-    @PostMapping("/admin/info")
+    @Operation(summary = "当前用户信息",description = "获取当前用户信息",security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping("/admin/info")
     public Admin getAdminInfo(Principal principal){
         if(null == principal){
             return null;

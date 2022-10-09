@@ -2,12 +2,10 @@
  * @Author: Aquarius
  * @Date: 2022-10-03 08:45:49
  * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-03 21:39:36
+ * @LastEditTime: 2022-10-07 10:49:41
  * @Description: comment
  */
 package com.xxxx.yebserver.entity;
-
-
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,5 +24,6 @@ public class AdminLoginParam {
     private String username;
     @Schema(description= "密码",required = true)
     private String password;
-
+    @Schema(description = "验证码",required = true)
+    private String code;
 }

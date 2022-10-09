@@ -2,6 +2,7 @@
 package com.xxxx.yebserver.service;
 
 import com.xxxx.yebserver.entity.Admin;
+import com.xxxx.yebserver.entity.AdminLoginParam;
 import com.xxxx.yebserver.entity.RespBean;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +21,11 @@ public interface AdminService extends IService<Admin> {
 
     /**
      * 登陆之后返回Token
-     * @param username
-     * @param password
+     * @param adminLoginParam
      * @param request
      * @return
      */
-    RespBean login(String username, String password, HttpServletRequest request);
+    RespBean login(AdminLoginParam adminLoginParam, HttpServletRequest request);
 
     /**
      * 根据用户名获取用户信息

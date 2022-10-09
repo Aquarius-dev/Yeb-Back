@@ -11,15 +11,14 @@ import com.xxxx.yebserver.config.IgnoreUrlsConfig;
  * @Author: Aquarius
  * @Date: 2022-10-02 16:24:49
  * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-06 20:31:09
- * @Description: comment
+ * @LastEditTime: 2022-10-06 20:57:48
+ * @Description:  启动类
  */
 
 @SpringBootApplication
 @EnableConfigurationProperties(IgnoreUrlsConfig.class)
 @MapperScan("com.xxxx.yebserver.mapper")
 public class YebApplication{
-    
     public static void main(String[] args) {
         SpringApplication.run(YebApplication.class, args);
     }
