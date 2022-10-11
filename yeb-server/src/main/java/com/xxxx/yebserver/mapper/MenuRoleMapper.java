@@ -2,6 +2,7 @@ package com.xxxx.yebserver.mapper;
 
 import com.xxxx.yebserver.entity.MenuRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
 
+    Integer insertRecord(@Param("rid") Integer rid, @Param("mids") Integer[] mids);
 }

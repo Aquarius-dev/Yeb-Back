@@ -1,5 +1,5 @@
 
-package com.xxxx.yebserver.config;
+package com.xxxx.yebserver.security.conmponent;
 
 import java.util.ArrayList;
 import java.util.List;

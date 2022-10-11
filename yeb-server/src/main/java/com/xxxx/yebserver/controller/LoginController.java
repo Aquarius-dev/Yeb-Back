@@ -9,9 +9,7 @@ package com.xxxx.yebserver.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,7 +46,8 @@ public class LoginController {
         return adminService.login(adminLoginParam,request);
     }
 
-    @Operation(summary = "当前用户信息",description = "获取当前用户信息",security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "当前用户信息",description = "获取当前用户信息")
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/admin/info")
     public Admin getAdminInfo(Principal principal){
         if(null == principal){
@@ -56,6 +55,7 @@ public class LoginController {
         }
         String username = principal.getName();
         Admin admin = adminService.getAdminByUserName(username);
+        admin.setRoles(adminService.getRoles(admin.getId()));
         admin.setPassword(null);
         return admin;
     }

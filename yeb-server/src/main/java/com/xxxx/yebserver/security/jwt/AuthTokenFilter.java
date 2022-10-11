@@ -1,4 +1,4 @@
-package com.xxxx.yebserver.config;
+package com.xxxx.yebserver.security.jwt;
 
 import java.io.IOException;
 
@@ -17,8 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.xxxx.yebserver.security.jwt.JwtUtils;
 
 /*
  * @Author: Aquarius

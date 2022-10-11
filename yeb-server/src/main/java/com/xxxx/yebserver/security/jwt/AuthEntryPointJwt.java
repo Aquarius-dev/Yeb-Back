@@ -1,4 +1,4 @@
-package com.xxxx.yebserver.config;
+package com.xxxx.yebserver.security.jwt;
 
 import java.io.IOException;
 import java.util.HashMap;

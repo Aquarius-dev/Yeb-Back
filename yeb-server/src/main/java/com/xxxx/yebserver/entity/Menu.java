@@ -1,9 +1,11 @@
 package com.xxxx.yebserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -58,4 +60,12 @@ public class Menu implements Serializable {
 
     @Schema(description="是否启用")
     private Boolean enabled;
+
+    @Schema(description = "子菜单")
+    @TableField(exist = false)
+    private List<Menu> children;
+
+    @Schema(description = "角色列表")
+    @TableField(exist = false)
+    private List<Role> roles;
 }

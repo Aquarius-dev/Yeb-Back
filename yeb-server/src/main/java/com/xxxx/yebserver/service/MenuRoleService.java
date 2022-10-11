@@ -2,6 +2,7 @@ package com.xxxx.yebserver.service;
 
 import com.xxxx.yebserver.entity.MenuRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xxxx.yebserver.entity.RespBean;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MenuRoleService extends IService<MenuRole> {
 
+    RespBean updateMenuRole(Integer rid, Integer[] mids);
 }

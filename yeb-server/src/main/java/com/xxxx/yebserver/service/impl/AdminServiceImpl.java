@@ -12,13 +12,16 @@ import com.wf.captcha.utils.CaptchaUtil;
 import com.xxxx.yebserver.entity.Admin;
 import com.xxxx.yebserver.entity.AdminLoginParam;
 import com.xxxx.yebserver.entity.RespBean;
+import com.xxxx.yebserver.entity.Role;
 import com.xxxx.yebserver.mapper.AdminMapper;
+import com.xxxx.yebserver.mapper.RoleMapper;
 import com.xxxx.yebserver.security.jwt.JwtUtils;
 import com.xxxx.yebserver.service.AdminService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +47,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     private AdminMapper adminMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -98,6 +104,16 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public Admin getAdminByUserName(String username) {
         return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", username).eq("enabled", true));
+    }
+
+    /**
+     * 根据用户ID查询角色列表
+     * @param adminId
+     * @return
+     */
+    @Override
+    public List<Role> getRoles(Integer adminId) {
+        return roleMapper.getRoles(adminId);
     }
 
 }

@@ -8,14 +8,20 @@
 package com.xxxx.yebserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Getter;
@@ -35,44 +41,52 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("t_admin")
 @Tag(name = "Admin对象", description = "管理员表")
-public class Admin implements Serializable,UserDetails {
+public class Admin implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description="id")
+    @Schema(description = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description="姓名")
+    @Schema(description = "姓名")
     private String name;
 
-    @Schema(description="手机号码")
+    @Schema(description = "手机号码")
     private String phone;
 
-    @Schema(description="住宅电话")
+    @Schema(description = "住宅电话")
     private String telephone;
 
-    @Schema(description="联系地址")
+    @Schema(description = "联系地址")
     private String address;
 
-    @Schema(description="用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @Schema(description="密码")
+    @Schema(description = "密码")
     private String password;
 
-    @Schema(description="用户头像")
+    @Schema(description = "用户头像")
     private String userFace;
 
-    @Schema(description="备注")
+    @Schema(description = "备注")
     private String remark;
 
-    @Schema(description="是否启用1 0")
+    @Schema(description = "是否启用1 0")
     private Byte enabled;
 
+    @Schema(description = "角色")
+    @TableField(exist = false)
+    private List<Role> roles;
+
     @Override
+    @JsonDeserialize
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<SimpleGrantedAuthority> authorities = roles.stream().
+                map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+        return authorities;
     }
 
     @Override

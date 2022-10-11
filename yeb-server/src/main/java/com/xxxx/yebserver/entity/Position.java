@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class Position implements Serializable {
     private String name;
 
     @Schema(description="创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asis/Shanghai")
     private LocalDateTime createDate;
 
     @Schema(description="是否启用")

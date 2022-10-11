@@ -8,6 +8,9 @@ import com.xxxx.yebserver.entity.RespBean;
 import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xxxx.yebserver.entity.Role;
+
+import java.util.List;
 
 /**
  * <p>
@@ -33,5 +36,12 @@ public interface AdminService extends IService<Admin> {
      * @return
      */
     Admin getAdminByUserName(String username);
+
+    /**
+     * 根据用户ID查询角色列表
+     * @param adminId
+     * @return
+     */
+    List<Role> getRoles(Integer adminId);
 
 }

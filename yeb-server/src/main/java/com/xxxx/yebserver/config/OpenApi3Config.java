@@ -19,5 +19,10 @@ import io.swagger.v3.oas.annotations.info.Info;
 @OpenAPIDefinition(info = @Info(title = "Yeb API",version = "0.1"))
 @SecurityScheme(name = "bearerAuth",type = SecuritySchemeType.HTTP,scheme = "Bearer",bearerFormat = "JWT")
 public class OpenApi3Config {
-
+//    @Bean
+//    public OpenAPI customOpenAPI(){
+//        return new OpenAPI().components(new Components()
+//                .addSecuritySchemes("bearer-Jwt",
+//                new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("Bearer").bearerFormat("JWT")));
+//    }
 }

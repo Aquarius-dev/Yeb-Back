@@ -1,11 +1,11 @@
 package com.xxxx.yebserver;
 
+import com.xxxx.yebserver.security.conmponent.IgnoreUrlsConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import com.xxxx.yebserver.config.IgnoreUrlsConfig;
 
 /*
  * @Author: Aquarius

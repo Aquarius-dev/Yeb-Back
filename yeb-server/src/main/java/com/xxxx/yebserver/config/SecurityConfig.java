@@ -1,19 +1,24 @@
 package com.xxxx.yebserver.config;
 
+import com.xxxx.yebserver.security.conmponent.*;
+import com.xxxx.yebserver.security.jwt.AuthEntryPointJwt;
+import com.xxxx.yebserver.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.xxxx.yebserver.entity.Admin;
@@ -27,8 +32,8 @@ import com.xxxx.yebserver.service.AdminService;
  * @Description: security配置
  */
 @Configuration
-@EnableWebSecurity(debug = true)
-// @EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableWebSecurity
+ @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
   @Autowired
@@ -39,6 +44,15 @@ public class SecurityConfig {
 
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
+
+  @Autowired
+  private RestfulAccessDeniedHandler restfulAccessDeniedHandler; // 无权访问时自定义处理结果
+
+  @Autowired
+  private CustomFilter customFilter;
+
+  @Autowired
+  private CustomUrlDecisionManager customUrlDecisionManager;
 
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -73,9 +87,14 @@ public class SecurityConfig {
     http.csrf().disable()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests().antMatchers(ignoreUrlsConfig.getUrls().toArray(String[]::new))
-        .permitAll()
-        .anyRequest().authenticated();
+            .authorizeRequests().anyRequest().authenticated().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+              @Override
+              public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+                object.setAccessDecisionManager(customUrlDecisionManager);
+                object.setSecurityMetadataSource(customFilter);
+                return object;
+              }
+            }).and().headers().cacheControl();
 
     http.authenticationProvider(authenticationProvider());
 
@@ -89,6 +108,7 @@ public class SecurityConfig {
     return username -> {
       Admin admin = adminService.getAdminByUserName(username);
       if (null != admin) {
+        admin.setRoles(adminService.getRoles(admin.getId()));
         return admin;
       }
       return null;
