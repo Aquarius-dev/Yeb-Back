@@ -8,12 +8,10 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
 
-/*
- * @Author: Aquarius
- * @Date: 2022-10-07 09:55:23
- * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-07 10:09:08
- * @Description: comment
+/**
+ * @Description: OpenApi 配置
+ * @Author aquarius
+ * @Date 2022/10/14 11:38
  */
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "Yeb API",version = "0.1"))

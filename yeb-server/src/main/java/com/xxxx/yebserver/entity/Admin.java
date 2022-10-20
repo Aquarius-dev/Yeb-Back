@@ -11,22 +11,22 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.xxxx.yebserver.config.CustomAuthorityDeserialize;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -74,14 +74,15 @@ public class Admin implements Serializable, UserDetails {
     private String remark;
 
     @Schema(description = "是否启用1 0")
-    private Byte enabled;
+    @Getter(AccessLevel.NONE)
+    private Boolean enabled;
 
     @Schema(description = "角色")
     @TableField(exist = false)
     private List<Role> roles;
 
     @Override
-    @JsonDeserialize
+    @JsonDeserialize(using = CustomAuthorityDeserialize.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = roles.stream().
                 map(role -> new SimpleGrantedAuthority(role.getName()))
@@ -106,6 +107,6 @@ public class Admin implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 }

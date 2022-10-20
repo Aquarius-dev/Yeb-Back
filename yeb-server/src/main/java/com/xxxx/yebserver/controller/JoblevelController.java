@@ -5,9 +5,12 @@ import com.xxxx.yebserver.entity.RespBean;
 import com.xxxx.yebserver.service.JoblevelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.List;
  * @author Aquarius
  * @since 2022-10-02
  */
+@Tag(name = "JoblevelController",description = "职称等级表")
 @RestController
 @RequestMapping("/system/basic/joblevel")
 @SecurityRequirement(name = "bearerAuth")
@@ -65,7 +69,7 @@ public class JoblevelController {
 
     @Operation(summary = "批量删除职称")
     @DeleteMapping("/")
-    public RespBean deletaJoblevelByIds(Integer[] ids) {
+    public RespBean deletaJoblevelByIds(@RequestBody Integer[] ids) {
         if (joblevelService.removeByIds(Arrays.asList(ids))) {
             return RespBean.success("删除成功！");
         }

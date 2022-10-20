@@ -8,6 +8,7 @@ subprojects{
 	apply plugin: 'java'
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'jacoco'
 	repositories {
         mavenCentral()
     }
@@ -51,7 +52,14 @@ subprojects{
 	}
 	tasks.named('test') {
 		useJUnitPlatform()
-	}	
+	}
+
+	test {
+		finalizedBy jacocoTestReport // report is always generated after tests run
+	}
+	jacocoTestReport {
+		dependsOn test // tests are required to run before generating the report
+	}
 }
 
 group = 'com.xxxx'
@@ -78,3 +86,4 @@ project(":yeb-server"){
 		compileOnly "org.projectlombok:lombok:$lombokVersion"
 	}
 }
+

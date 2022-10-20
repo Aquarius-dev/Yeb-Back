@@ -8,32 +8,30 @@
 
 package com.xxxx.yebserver.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wf.captcha.utils.CaptchaUtil;
-import com.xxxx.yebserver.entity.Admin;
-import com.xxxx.yebserver.entity.AdminLoginParam;
-import com.xxxx.yebserver.entity.RespBean;
-import com.xxxx.yebserver.entity.Role;
+import com.xxxx.yebserver.entity.*;
 import com.xxxx.yebserver.mapper.AdminMapper;
+import com.xxxx.yebserver.mapper.AdminRoleMapper;
 import com.xxxx.yebserver.mapper.RoleMapper;
 import com.xxxx.yebserver.security.jwt.JwtUtils;
 import com.xxxx.yebserver.service.AdminService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*
  * @Author: Aquarius
@@ -52,6 +50,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     private RoleMapper roleMapper;
 
     @Autowired
+    private AdminRoleMapper adminRoleMapper;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -65,6 +66,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 登陆之后返回Token
+     *
      * @param adminLoginParam
      * @param request
      * @return
@@ -76,38 +78,40 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             CaptchaUtil.clear(request);
             return RespBean.error("验证码不正确");
         }
-        UserDetails userDetails =  userDetailsService.loadUserByUsername(adminLoginParam.getUsername());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(adminLoginParam.getUsername());
 
-        if(null == userDetails || !passwordEncoder.matches(adminLoginParam.getPassword(), userDetails.getPassword())){
+        if (null == userDetails || !passwordEncoder.matches(adminLoginParam.getPassword(), userDetails.getPassword())) {
             return RespBean.error("用户名密码不正确");
         }
-        
-        if(!userDetails.isEnabled()){
+
+        if (!userDetails.isEnabled()) {
             return RespBean.error("账号被禁用，请联系管理员");
         }
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         String token = jwtUtils.generateToken(userDetails);
-        Map<String,String> tokenMap = new HashMap<>(6);
-        tokenMap.put("token",token);
+        Map<String, String> tokenMap = new HashMap<>(6);
+        tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
-        return RespBean.success("登陆成功",tokenMap);
+        return RespBean.success("登陆成功", tokenMap);
     }
 
-     /**
+    /**
      * 根据用户名获取用户信息
+     *
      * @param username
      * @return
      */
     @Override
     public Admin getAdminByUserName(String username) {
-        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", username).eq("enabled", true));
+        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", username));
     }
 
     /**
      * 根据用户ID查询角色列表
+     *
      * @param adminId
      * @return
      */
@@ -116,4 +120,49 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         return roleMapper.getRoles(adminId);
     }
 
+    /**
+     * 获取所有操作员
+     *
+     * @param keywords
+     * @return
+     */
+    @Override
+    public List<Admin> getAllAdmins(String keywords) {
+        Integer id = ((Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        return adminMapper.getAllAdmins(id, keywords);
+    }
+
+    /**
+     * 更新操作员角色
+     *
+     * @param adminId
+     * @param rids
+     * @return
+     */
+    @Override
+    @Transactional
+    public RespBean updateAdminRole(Integer adminId, Integer[] rids) {
+        adminRoleMapper.delete(new QueryWrapper<AdminRole>().eq("admin_Id", adminId));
+        Integer result = adminRoleMapper.addAdminRole(adminId, rids);
+        if (rids.length == result) {
+            return RespBean.success("更新成功");
+        }
+        return RespBean.error("更新失败");
+    }
+
+    @Override
+    public RespBean updateAdminPassword(String oldPass, String pass, Integer adminId) {
+        Admin admin = baseMapper.selectById(adminId);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        // 比对密码，判断旧密码是否正确
+        if (encoder.matches(oldPass, admin.getPassword())) {
+            // 设置密码，并加密
+            admin.setPassword(encoder.encode(pass));
+            int result = baseMapper.updateById(admin);
+            if (1 == result) {
+                return RespBean.success("更新成功！");
+            }
+        }
+        return RespBean.error("更新失败！");
+    }
 }
