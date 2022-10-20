@@ -1,15 +1,12 @@
-
 package com.xxxx.yebserver.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.xxxx.yebserver.entity.Admin;
 import com.xxxx.yebserver.entity.AdminLoginParam;
 import com.xxxx.yebserver.entity.RespBean;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.xxxx.yebserver.entity.Role;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -24,6 +21,7 @@ public interface AdminService extends IService<Admin> {
 
     /**
      * 登陆之后返回Token
+     *
      * @param adminLoginParam
      * @param request
      * @return
@@ -32,6 +30,7 @@ public interface AdminService extends IService<Admin> {
 
     /**
      * 根据用户名获取用户信息
+     *
      * @param username
      * @return
      */
@@ -39,9 +38,28 @@ public interface AdminService extends IService<Admin> {
 
     /**
      * 根据用户ID查询角色列表
+     *
      * @param adminId
      * @return
      */
     List<Role> getRoles(Integer adminId);
 
+    /**
+     * 获取所有操作员
+     *
+     * @param keywords
+     * @return
+     */
+    List<Admin> getAllAdmins(String keywords);
+
+    /**
+     * 更新操作员角色
+     *
+     * @param adminId
+     * @param rids
+     * @return
+     */
+    RespBean updateAdminRole(Integer adminId, Integer[] rids);
+
+    RespBean updateAdminPassword(String oldPass, String pass, Integer adminId);
 }

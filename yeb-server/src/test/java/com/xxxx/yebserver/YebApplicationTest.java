@@ -8,5 +8,4 @@ public class YebApplicationTest {
     @Test
     void contextLoads() {
     }
-    
 }

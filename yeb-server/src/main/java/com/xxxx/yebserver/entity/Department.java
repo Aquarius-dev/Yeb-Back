@@ -1,9 +1,12 @@
 package com.xxxx.yebserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
@@ -45,4 +48,12 @@ public class Department implements Serializable {
 
     @Schema(description="是否上级")
     private Boolean isParent;
+
+    @Schema(description = "子部门列表")
+    @TableField(exist = false)
+    private List<Department> children;
+
+    @Schema(description = "返回结果")
+    @TableField(exist = false)
+    private Integer result;
 }

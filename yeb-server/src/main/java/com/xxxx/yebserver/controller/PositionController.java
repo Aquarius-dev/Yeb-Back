@@ -6,6 +6,7 @@ import com.xxxx.yebserver.service.PositionService;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,9 @@ import java.util.List;
  * @author Aquarius
  * @since 2022-10-02
  */
+@Tag(name = "PositionController",description = "职位管理")
 @RestController
-@RequestMapping("/system/config/pos")
+@RequestMapping("/system/basic/pos")
 @SecurityRequirement(name = "bearerAuth")
 public class PositionController {
 

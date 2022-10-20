@@ -24,12 +24,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.xxxx.yebserver.entity.Admin;
 import com.xxxx.yebserver.service.AdminService;
 
-/*
- * @Author: Aquarius
- * @Date: 2022-10-04 10:52:42
- * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-06 11:24:09
- * @Description: security配置
+/**
+ * @Description: Springboot 安全配置
+ * @Author aquarius
+ * @Date 2022/10/14 11:38
  */
 @Configuration
 //@EnableWebSecurity

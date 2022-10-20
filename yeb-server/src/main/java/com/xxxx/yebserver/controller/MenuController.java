@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2022-10-02
  */
 @RestController
-@RequestMapping("/system/cfg")
+@RequestMapping("/system/config")
 @SecurityRequirement(name = "bearerAuth")
 public class MenuController {
 

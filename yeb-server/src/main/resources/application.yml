@@ -4,7 +4,7 @@ spring:
   datasource:
     password: qwert1234
     username: zhong
-    url: jdbc:mysql://192.168.1.152:33306/yeb?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://192.168.123.56:13306/yeb?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       # 连接池名字
@@ -25,10 +25,9 @@ spring:
   redis:
     # 超时时间
     connect-timeout: 10000ms
-    host: 192.168.1.152
-    port: 6379
+    host: 192.168.123.56
+    port: 16379
     database: 0
-    password: qwert1234
     lettuce:
       pool:
         # 最大连接数
