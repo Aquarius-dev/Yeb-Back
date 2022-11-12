@@ -14,8 +14,7 @@ import java.time.format.DecimalStyle;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
@@ -26,8 +25,9 @@ import lombok.experimental.Accessors;
  * @author Aquarius
  * @date 2022-10-02
  */
-@Getter
-@Setter
+
+
+@Data
 @Accessors(chain = true)
 @TableName("t_employee")
 @Tag(name = "Employee对象", description = "员工表")
