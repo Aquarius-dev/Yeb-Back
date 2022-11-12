@@ -1,17 +1,17 @@
 package com.xxxx.yebserver.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -19,10 +19,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = false, of = "name")
 @Accessors(chain = true)
 @TableName("t_position")
 @Tag(name = "Position对象", description = "职位")
@@ -33,13 +35,15 @@ public class Position implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description="职位")
+    @Schema(description = "职位")
+    @Excel(name = "职位")
+    @NonNull
     private String name;
 
-    @Schema(description="创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asis/Shanghai")
+    @Schema(description = "创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asis/Shanghai")
     private LocalDateTime createDate;
 
-    @Schema(description="是否启用")
+    @Schema(description = "是否启用")
     private Boolean enabled;
 }

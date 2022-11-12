@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 public interface OplogMapper extends BaseMapper<Oplog> {
 

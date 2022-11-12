@@ -16,7 +16,7 @@ import java.util.List;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 @Service
 public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Department> implements DepartmentService {

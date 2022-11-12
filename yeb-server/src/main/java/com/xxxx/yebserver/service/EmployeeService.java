@@ -1,13 +1,12 @@
 package com.xxxx.yebserver.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xxxx.yebserver.entity.Employee;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xxxx.yebserver.entity.Employee;
 import com.xxxx.yebserver.entity.RespBean;
 import com.xxxx.yebserver.utils.RespPageBean;
-import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +14,7 @@ import java.time.LocalDate;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 public interface EmployeeService extends IService<Employee> {
 
@@ -41,4 +40,11 @@ public interface EmployeeService extends IService<Employee> {
      * @return
      */
     RespBean addEmp(Employee employee);
+
+    /**
+     * 查询员工
+     * @param id
+     * @return
+     */
+    List<Employee> getEmployee(Integer id);
 }

@@ -20,7 +20,7 @@ import java.util.List;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
