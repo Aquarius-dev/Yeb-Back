@@ -12,7 +12,7 @@ import java.util.List;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 public interface DepartmentService extends IService<Department> {
 

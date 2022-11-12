@@ -29,12 +29,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <p>
  * 管理员表
- * </p>
- *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022/10/02
  */
 @Getter
 @Setter

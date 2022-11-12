@@ -1,13 +1,12 @@
 package com.xxxx.yebserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxxx.yebserver.entity.Employee;
 import com.xxxx.yebserver.entity.RespBean;
 import com.xxxx.yebserver.mapper.EmployeeMapper;
 import com.xxxx.yebserver.service.EmployeeService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxxx.yebserver.utils.RespPageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ import java.util.Map;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
@@ -64,6 +63,16 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      */
     @Override
     public RespBean addEmp(Employee employee) {
+        return null;
+    }
+
+    /**
+     * 查询员工
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Employee> getEmployee(Integer id) {
         return null;
     }
 }

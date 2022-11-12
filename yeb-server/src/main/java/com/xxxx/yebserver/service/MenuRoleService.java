@@ -10,7 +10,7 @@ import com.xxxx.yebserver.entity.RespBean;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 public interface MenuRoleService extends IService<MenuRole> {
 

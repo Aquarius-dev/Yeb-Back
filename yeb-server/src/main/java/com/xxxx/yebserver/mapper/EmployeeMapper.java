@@ -13,7 +13,7 @@ import java.time.LocalDate;
  * </p>
  *
  * @author Aquarius
- * @since 2022-10-02
+ * @date 2022-10-02
  */
 public interface EmployeeMapper extends BaseMapper<Employee> {
 

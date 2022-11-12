@@ -1,10 +1,3 @@
-/*
- * @Author: Aquarius
- * @Date: 2022-10-03 08:45:49
- * @LastEditors: Aquraius
- * @LastEditTime: 2022-10-07 10:49:41
- * @Description: comment
- */
 package com.xxxx.yebserver.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +7,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+/**
+ * 管理员登录对象
+ * @author Aquarius
+ * @data 2022/11/12
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor

@@ -36,6 +36,9 @@ subprojects{
 
 		implementation "org.springdoc:springdoc-openapi-ui:+"
 
+		implementation 'cn.afterturn:easypoi-spring-boot-starter:4.4.0'
+
+
 		developmentOnly "org.springframework.boot:spring-boot-devtools"
 
 		runtimeOnly "mysql:mysql-connector-java:$mysqlconnectorVersion"
