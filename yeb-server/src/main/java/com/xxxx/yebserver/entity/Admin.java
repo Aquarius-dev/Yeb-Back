@@ -16,8 +16,8 @@ import com.xxxx.yebserver.config.CustomAuthorityDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,11 +30,11 @@ import java.util.stream.Collectors;
 
 /**
  * 管理员表
+ *
  * @author Aquarius
  * @date 2022/10/02
  */
-@Getter
-@Setter
+@Data
 @Accessors(chain = true)
 @TableName("t_admin")
 @Tag(name = "Admin对象", description = "管理员表")
