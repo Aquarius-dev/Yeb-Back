@@ -11,7 +11,9 @@ import com.xxxx.yebserver.utils.RespPageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     /**
-     * 获取工号
+     * 获取工号:添加员工工号是当前最大工号+1
      *
      * @return
      */
@@ -58,21 +60,33 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     /**
      * 添加员工
+     *
      * @param employee
      * @return
      */
     @Override
     public RespBean addEmp(Employee employee) {
-        return null;
+        // 处理合同期限，保留两位小数
+        LocalDate beginContract = employee.getBeginContract();// 合同开始时间
+        LocalDate endContract = employee.getEndContract();// 合同结束时间
+        // 计算 两个日期相差多少天
+        long days = beginContract.until(endContract, ChronoUnit.DAYS);
+        DecimalFormat decimalFormat = new DecimalFormat("##.00");
+        employee.setContractTerm(Double.parseDouble(decimalFormat.format(days / 365.00)));
+        if (1 == employeeMapper.insert(employee)) {
+            return RespBean.success("添加成功!");
+        }
+        return RespBean.error("添加失败");
     }
 
     /**
      * 查询员工
+     *
      * @param id
      * @return
      */
     @Override
     public List<Employee> getEmployee(Integer id) {
-        return null;
+        return employeeMapper.getEmployee(id);
     }
 }
