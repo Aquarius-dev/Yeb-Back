@@ -1,68 +1,60 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.4'
-	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.7.4'
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'java'
 }
 
-subprojects{
-	apply plugin: 'java'
-	apply plugin: 'org.springframework.boot'
-	apply plugin: 'io.spring.dependency-management'
-	apply plugin: 'jacoco'
-	repositories {
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'jacoco'
+    repositories {
         mavenCentral()
     }
 
-	ext{
-		mybatisVersion = "3.5.2"
-		swaggerVersion = "3.0.0"
-		mysqlconnectorVersion = "8.0.30"
-		lombokVersion = "1.18.24"
-	}
+    ext {
+        swaggerVersion = "3.0.0"
+        mysqlconnectorVersion = "8.0.30"
+        lombokVersion = "1.18.24"
+    }
 
-	dependencies{
-		implementation 'org.springframework.boot:spring-boot-starter'
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
 
-		implementation("org.springframework.boot:spring-boot-starter-web") {
-			exclude group: "org.springframework.boot",module:"spring-boot-starter-tomcat"
-		}
-		implementation "org.springframework.boot:spring-boot-starter-jetty"
-		implementation "com.baomidou:mybatis-plus-boot-starter:$mybatisVersion"
+        implementation("org.springframework.boot:spring-boot-starter-web") {
+            exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+        }
+        implementation "org.springframework.boot:spring-boot-starter-jetty"
 
-		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-		implementation 'org.apache.commons:commons-pool2:2.11.1'
+        implementation "org.springframework.boot:spring-boot-starter-amqp"
 
-		implementation 'com.github.whvcse:easy-captcha:1.6.2'
+        implementation "org.springframework.boot:spring-boot-starter-data-redis"
 
-		implementation "org.springdoc:springdoc-openapi-ui:+"
+        developmentOnly "org.springframework.boot:spring-boot-devtools"
 
-		implementation 'cn.afterturn:easypoi-spring-boot-starter:4.4.0'
+        runtimeOnly "mysql:mysql-connector-java:$mysqlconnectorVersion"
 
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
 
-		developmentOnly "org.springframework.boot:spring-boot-devtools"
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-		runtimeOnly "mysql:mysql-connector-java:$mysqlconnectorVersion"
+        testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+        testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-		compileOnly "org.projectlombok:lombok:$lombokVersion"
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 
-		compileOnly 'org.projectlombok:lombok:1.18.24'
-		annotationProcessor 'org.projectlombok:lombok:1.18.24'
-
-		testCompileOnly 'org.projectlombok:lombok:1.18.24'
-		testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-
-		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	}
-	tasks.named('test') {
-		useJUnitPlatform()
-	}
-
-	test {
-		finalizedBy jacocoTestReport // report is always generated after tests run
-	}
-	jacocoTestReport {
-		dependsOn test // tests are required to run before generating the report
-	}
+    test {
+        finalizedBy jacocoTestReport // report is always generated after tests run
+    }
+    jacocoTestReport {
+        dependsOn test // tests are required to run before generating the report
+    }
 }
 
 group = 'com.xxxx'
@@ -70,23 +62,31 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
-project(":yeb-server"){
-	ext {
-		jjwtVersion = '0.11.5'
-	}
-	dependencies {
-		implementation "org.springframework.boot:spring-boot-starter-security"
-		implementation "io.jsonwebtoken:jjwt-api:$jjwtVersion"
-		implementation "io.jsonwebtoken:jjwt-gson:$jjwtVersion"
-		runtimeOnly "io.jsonwebtoken:jjwt-impl:$jjwtVersion"
-		compileOnly "org.projectlombok:lombok:$lombokVersion"
-	}
-}
+//project(":yeb-server") {
+//    ext {
+//        jjwtVersion = '0.11.5'
+//    }
+//    dependencies {
+//        implementation "org.springframework.boot:spring-boot-starter-security"
+//        implementation "io.jsonwebtoken:jjwt-api:$jjwtVersion"
+//        implementation "io.jsonwebtoken:jjwt-gson:$jjwtVersion"
+//        runtimeOnly "io.jsonwebtoken:jjwt-impl:$jjwtVersion"
+//        compileOnly "org.projectlombok:lombok:$lombokVersion"
+//    }
+//}
+
+//project(":yeb-mail") {
+//    dependencies {
+//        implementation 'org.springframework.boot:spring-boot-starter-amqp:2.7.5'
+//        implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.5'
+//        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.7.5'
+//    }
+//}
 

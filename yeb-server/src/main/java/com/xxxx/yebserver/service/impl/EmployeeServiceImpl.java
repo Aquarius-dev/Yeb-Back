@@ -4,18 +4,25 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxxx.yebserver.entity.Employee;
+import com.xxxx.yebserver.entity.MailLog;
 import com.xxxx.yebserver.entity.RespBean;
 import com.xxxx.yebserver.mapper.EmployeeMapper;
+import com.xxxx.yebserver.mapper.MailLogMapper;
 import com.xxxx.yebserver.service.EmployeeService;
+import com.xxxx.yebserver.utils.MailConstants;
 import com.xxxx.yebserver.utils.RespPageBean;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -27,9 +34,12 @@ import java.util.Map;
  */
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
-
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private MailLogMapper mailLogMapper;
 
     /**
      * 获取所有员工(分页)
@@ -74,6 +84,24 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         DecimalFormat decimalFormat = new DecimalFormat("##.00");
         employee.setContractTerm(Double.parseDouble(decimalFormat.format(days / 365.00)));
         if (1 == employeeMapper.insert(employee)) {
+            //  获取当前行添加员工记录
+            Employee emp = employeeMapper.getEmployee(employee.getId()).get(0);
+            // 数据库记录发送的消息
+            String msgId = UUID.randomUUID().toString();
+            MailLog mailLog = new MailLog();
+            mailLog.setMsgId(msgId);
+            mailLog.setEid(employee.getId());
+            mailLog.setStatus(0);
+            mailLog.setRouteKey(MailConstants.MAIL_ROUTTING_KEY_NAME);
+            mailLog.setExchange(MailConstants.MAIL_EXCHANGE_NAME);
+            mailLog.setCount(0);
+            mailLog.setTryTime(LocalDateTime.now().plusMinutes(MailConstants.MEG_TIMEOUT));
+            mailLog.setCreateTime(LocalDateTime.now());
+            mailLog.setUpdateTime(LocalDateTime.now());
+            // 把设置的数据插入表中
+            mailLogMapper.insert(mailLog);
+            rabbitTemplate.convertAndSend(MailConstants.MAIL_EXCHANGE_NAME, MailConstants.MAIL_ROUTTING_KEY_NAME, emp,
+                    new CorrelationData(msgId));
             return RespBean.success("添加成功!");
         }
         return RespBean.error("添加失败");

@@ -1,0 +1,14 @@
+server:
+  port: 8082
+spring:
+  mail:
+    host: smtp.126.com
+    default-encoding: utf-8
+    port: 465
+    username: zww806084554@163.com
+    password: LMJTJOXTBWPSTHUM
+  rabbitmq:
+    host: 192.168.123.56
+    port: 5672
+    username: guest
+    password: guest
