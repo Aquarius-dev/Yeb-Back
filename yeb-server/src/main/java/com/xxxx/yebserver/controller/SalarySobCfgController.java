@@ -1,5 +1,9 @@
 package com.xxxx.yebserver.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.xxxx.yebserver.entity.Employee;
+import com.xxxx.yebserver.entity.RespBean;
+
 import com.xxxx.yebserver.entity.Salary;
 import com.xxxx.yebserver.service.EmployeeService;
 import com.xxxx.yebserver.service.SalaryService;
@@ -7,10 +11,14 @@ import com.xxxx.yebserver.utils.RespPageBean;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -40,4 +48,14 @@ public class SalarySobCfgController {
     public RespPageBean getEmployeeWithSalary(@RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "10") Integer size) {
         return employeeService.getEmployeeWithSalary(currentPage, size);
     }
+
+    @Operation(summary = "更新员工账套")
+    @PutMapping("/")
+    public RespBean updateEmployeeSalary(Integer eid, Integer sid) {
+        if (employeeService.update(new UpdateWrapper<Employee>().set("salary_id", sid).eq("id", eid))) {
+            return RespBean.success("更新成功！");
+        }
+        return RespBean.error("更新失败！");
+    }
+
 }
