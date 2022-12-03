@@ -4,7 +4,7 @@ spring:
   datasource:
     password: qwert1234
     username: zhong
-    url: jdbc:mysql://192.168.123.56:13306/yeb?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://192.168.159.133:13306/yeb?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       # 连接池名字
@@ -25,8 +25,8 @@ spring:
   redis:
     # 超时时间
     connect-timeout: 10000ms
-    host: 192.168.123.56
-    port: 16379
+    host: 192.168.159.133
+    port: 6379
     database: 0
     lettuce:
       pool:
@@ -40,7 +40,7 @@ spring:
   rabbitmq:
     username: guest
     password: guest
-    host: 192.168.123.56
+    host: 192.168.123.142
     port: 5672
     publisher-confirm-type: correlated
     publisher-confirms: true
@@ -86,3 +86,5 @@ secure:
       - /login
       - /logout
       - /captcha
+      - /ws/**
+      - /websockt/**
